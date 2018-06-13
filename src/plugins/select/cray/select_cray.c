@@ -602,7 +602,7 @@ static void _initialize_event(alpsc_ev_app_t *event,
 	if (job_ptr->pack_job_id && (job_ptr->pack_job_id != NO_VAL))
 		jobid = job_ptr->pack_job_id;
 	else
-		jobid = job_ptr->jobid;
+		jobid = job_ptr->job_id;
 
 	event->apid = SLURM_ID_HASH(jobid, step_ptr->step_id);
 	event->uid = job_ptr->user_id;
@@ -770,7 +770,7 @@ static void _update_app(struct step_record *step_ptr,
 		if (job_ptr->pack_job_id && (job_ptr->pack_job_id != NO_VAL))
 			jobid = job_ptr->pack_job_id;
 		else
-			jobid = job_ptr->jobid;
+			jobid = job_ptr->job_id;
 
 		apid = SLURM_ID_HASH(jobid, step_ptr->step_id);
 		for (i = 0; i < app_list_size; i++) {
@@ -804,7 +804,7 @@ static void _update_app(struct step_record *step_ptr,
 		if (job_ptr->pack_job_id && (job_ptr->pack_job_id != NO_VAL))
 			jobid = job_ptr->pack_job_id;
 		else
-			jobid = job_ptr->jobid;
+			jobid = job_ptr->job_id;
 
 		apid = SLURM_ID_HASH(jobid, step_ptr->step_id);
 		for (i = 0; i < app_list_size; i++) {
