@@ -671,6 +671,7 @@ extern void slurm_free_reboot_msg(reboot_msg_t * msg)
 	if (msg) {
 		xfree(msg->features);
 		xfree(msg->node_list);
+		xfree(msg->reason);
 		xfree(msg);
 	}
 }

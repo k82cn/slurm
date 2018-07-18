@@ -93,6 +93,8 @@ documents those changes that are of interest to users and administrators.
     performance.
  -- SlurmDBD - Print warning if MySQL/MariaDB internal tuning is not at least
     half of the recommended values.
+ -- Add ability to specify a node reason when rebooting nodes with "scontrol
+    reboot".
 
 * Changes in Slurm 18.08.0pre1
 ==============================
