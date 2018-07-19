@@ -95,6 +95,8 @@ documents those changes that are of interest to users and administrators.
     half of the recommended values.
  -- Add ability to specify a node reason when rebooting nodes with "scontrol
     reboot".
+ -- Add next_state option to "scontrol reboot" to dictate state of node after
+    reboot.
 
 * Changes in Slurm 18.08.0pre1
 ==============================

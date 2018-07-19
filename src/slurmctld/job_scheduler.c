@@ -4221,6 +4221,7 @@ extern int reboot_job_nodes(struct job_record *job_ptr)
 		reboot_agent_args->protocol_version = protocol_version;
 		reboot_agent_args->hostlist = hostlist_create(NULL);
 		reboot_msg = xmalloc(sizeof(reboot_msg_t));
+		slurm_init_reboot_msg(reboot_msg, false);
 		reboot_agent_args->msg_args = reboot_msg;
 		reboot_msg->features = reboot_features;	/* Move, not copy */
 		for (i = i_first; i <= i_last; i++) {
@@ -4250,6 +4251,7 @@ extern int reboot_job_nodes(struct job_record *job_ptr)
 		reboot_agent_args->protocol_version = protocol_version;
 		reboot_agent_args->hostlist = hostlist_create(NULL);
 		reboot_msg = xmalloc(sizeof(reboot_msg_t));
+		slurm_init_reboot_msg(reboot_msg, false);
 		reboot_agent_args->msg_args = reboot_msg;
 		/* reboot_msg->features = NULL; */
 		for (i = i_first; i <= i_last; i++) {
