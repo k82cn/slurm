@@ -11947,9 +11947,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 		} else {
 			if (node_name2bitmap(job_specs->exc_nodes, false,
 					     &exc_bitmap)) {
-				error("sched: update_job: Invalid node list "
-				      "for update of job %u: %s",
-				      job_ptr->job_id, job_specs->exc_nodes);
+				sched_error("update_job: Invalid node list for update of job %u: %s",
+					    job_ptr->job_id, job_specs->exc_nodes);
 				FREE_NULL_BITMAP(exc_bitmap);
 				error_code = ESLURM_INVALID_NODE_NAME;
 			}
@@ -12567,8 +12566,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 			debug("%s: job %d already release ignoring request",
 			      __func__, job_ptr->job_id);
 		} else {
-			error("sched: Attempt to modify priority for job %u",
-			      job_ptr->job_id);
+			sched_error("Attempt to modify priority for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		}
 	} else if (job_ptr->state_reason == FAIL_BAD_CONSTRAINTS) {
@@ -12613,8 +12612,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 			job_ptr->details->nice = job_specs->nice;
 			update_accounting = true;
 		} else {
-			error("sched: Attempt to modify nice for "
-			      "job %u", job_ptr->job_id);
+			sched_error("Attempt to modify nice for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		}
 	}
@@ -12710,8 +12709,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 		if ((!IS_JOB_PENDING(job_ptr)) || (detail_ptr == NULL)) {
 			error_code = ESLURM_JOB_NOT_PENDING;
 		} else if (!operator) {
-			error("sched: Attempt to change sharing for job %u",
-			      job_ptr->job_id);
+			sched_error("Attempt to change sharing for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		} else {
 			if (job_specs->shared) {
@@ -12738,8 +12737,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 			     "for job_id %u", job_specs->contiguous,
 			     job_ptr->job_id);
 		} else {
-			error("sched: Attempt to add contiguous for job %u",
-			      job_ptr->job_id);
+			sched_error("Attempt to add contiguous for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		}
 	}
@@ -12760,8 +12759,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 			if (detail_ptr->core_spec != NO_VAL16)
 				detail_ptr->whole_node = 1;
 		} else {
-			error("sched: Attempt to modify core_spec for job %u",
-			      job_ptr->job_id);
+			sched_error("Attempt to modify core_spec for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		}
 	}
@@ -13054,8 +13053,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 			     "for job_id %u", job_specs->ntasks_per_node,
 			     job_ptr->job_id);
 		} else {
-			error("sched: Not super user: ignore ntasks_per_node "
-			      "change for job %u", job_ptr->job_id);
+			sched_error("Not super user: ignore ntasks_per_node change for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		}
 	}
@@ -13073,8 +13072,8 @@ static int _update_job(struct job_record *job_ptr, job_desc_msg_t * job_specs,
 			     "for job_id %u", job_specs->ntasks_per_socket,
 			     job_ptr->job_id);
 		} else {
-			error("sched: Not super user: ignore ntasks_per_socket "
-			      "change for job %u", job_ptr->job_id);
+			sched_error("Not super user: ignore ntasks_per_socket change for job %u",
+				    job_ptr->job_id);
 			error_code = ESLURM_ACCESS_DENIED;
 		}
 	}
