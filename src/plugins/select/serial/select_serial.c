@@ -62,6 +62,7 @@ bitstr_t *idle_node_bitmap __attribute__((weak_import));
 uint16_t *cr_node_num_cores __attribute__((weak_import));
 uint32_t *cr_node_cores_offset __attribute__((weak_import));
 int slurmctld_tres_cnt __attribute__((weak_import)) = 0;
+slurmctld_config_t slurmctld_config __attribute__((weak_import));
 #else
 slurm_ctl_conf_t slurmctld_conf;
 struct node_record *node_record_table_ptr;
@@ -76,6 +77,7 @@ bitstr_t *idle_node_bitmap;
 uint16_t *cr_node_num_cores;
 uint32_t *cr_node_cores_offset;
 int slurmctld_tres_cnt = 0;
+slurmctld_config_t slurmctld_config;
 #endif
 
 /*
@@ -865,7 +867,7 @@ static int _rm_job_from_res(struct part_res_record *part_record_ptr,
 	int i_first, i_last;
 	int i, n;
 	List gres_list;
-
+	bool old_job = false;
 
 	if (select_state_initializing) {
 		/* Ignore job removal until select/cons_res data structures
@@ -880,6 +882,8 @@ static int _rm_job_from_res(struct part_res_record *part_record_ptr,
 
 	debug3("select/serial: _rm_job_from_res: job %u action %d",
 	       job_ptr->job_id, action);
+	if (job_ptr->start_time < slurmctld_config.boot_time)
+		old_job = true;
 	if (select_debug_flags & DEBUG_FLAG_SELECT_TYPE)
 		_dump_job_res(job);
 
@@ -903,7 +907,7 @@ static int _rm_job_from_res(struct part_res_record *part_record_ptr,
 				gres_list = node_ptr->gres_list;
 			gres_plugin_job_dealloc(job_ptr->gres_list, gres_list,
 						n, job_ptr->job_id,
-						node_ptr->name);
+						node_ptr->name, old_job);
 			gres_plugin_node_state_log(gres_list, node_ptr->name);
 		}
 
